@@ -1,106 +1,49 @@
-Appcelerator Titanium Mobile Module Project
-===========================================
-
-This is a skeleton Titanium Mobile Mobile module project.
+# TiAVAduioSession
+## Enables the AVAudioSessionCategoryOptionDuckOthers option
 
 
-MODULE NAMING
--------------
+This module is for using [AVAudioSessionCategoryOptionDuckOthers](https://developer.apple.com/documentation/avfoundation/avaudiosessioncategoryoptions/avaudiosessioncategoryoptionduckothers) which causes audio running from other apps (Music, Spotify, etc) to be temporarily ducked (reduced in volume) when this app plays a sound.
 
-Choose a unique module id for your module.  This ID usually follows a namespace
-convention using DNS notation.  For example, com.appcelerator.module.test.  This
-ID can only be used once by all public modules in Titanium.
+### Methods
+* `init()`: Intializes the audio session for the app using `AVAudioSessionCategoryAmbient`.  This needs to be run when the app is first opened.
+* `enableDuckAudio()`: Call this right before you play a sound. Note that you only need to call it once during an app session to have all sounds duck the audio, though calling it more than once, such as before every sound you play, is fine.
+* `disableDuckAudio()` Optionally disable ducking. This returns the audio to Ambient Category, meaning the app sound and background audio will both be played at the same level.
+### Example
+```
+//Do this once when app is first launched/resumed, such as in app.js or alloy.js:
+//initialize the module
+var AVAudio = require('com.polancomedia.tiavaudiosession');
+AVAudio.init();
 
+var btn1 = Ti.UI.createButton({
+	title: '1. Enable Duck Audio and Play',
+	top: 100
+});
+win.add(btn1);
 
-GET STARTED
-------------
+var crickets1 = Titanium.Media.createSound({
+	url: 'cricket.wav'
+});
 
-1. Edit manifest with the appropriate details about your module.
-2. Edit LICENSE to add your license details.
-3. Place any assets (such as PNG files) that are required anywhere in the module folder.
-4. Edit the timodule.json and configure desired settings.
-5. Code and build.
+//background audio from Music, Spotify, etc, will be temporarily ducked or dimmed while
+//crickets are chirping in your app.
+btn1.addEventListener('click', function () {
+	AVAudio.enableDuckAudio();
+	crickets1.play();
+});
 
+win.open();
 
-DOCUMENTATION FOR YOUR MODULE
------------------------------
-
-You should provide at least minimal documentation for your module in `documentation` folder using the Markdown syntax.
-
-For more information on the Markdown syntax, refer to this documentation at:
-
-<http://daringfireball.net/projects/markdown/>
-
-
-TEST HARNESS EXAMPLE FOR YOUR MODULE
-------------------------------------
-
-The `example` directory contains a skeleton application test harness that can be
-used for testing and providing an example of usage to the users of your module.
-
-
-BUILDING YOUR MODULE
---------------------
-
-Simply run `titanium build --platform <name of platform> --build-type production --dir /path/to/module`.
-You can omit the --dir option if your working directory is in the module's project directory.
+```
 
 
-INSTALL YOUR MODULE
--------------------
 
-Mac OS X
---------
-Copy the distribution zip file into the `~/Library/Application Support/Titanium` folder
+#### Build and run the example app
 
-Linux
------
-Copy the distribution zip file into the `~/.titanium` folder
-
-Windows
--------
-Copy the distribution zip file into the `C:\ProgramData\Titanium` folder
-
-
-REGISTER YOUR MODULE
---------------------
-
-Register your module with your application by editing `tiapp.xml` and adding your module.
-Example:
-
-<modules>
-	<module version="0.1">com.polancomedia.tiavaudiosession</module>
-</modules>
-
-When you run your project, the compiler will combine your module along with its dependencies
-and assets into the application.
-
-
-USING YOUR MODULE IN CODE
--------------------------
-
-To use your module in code, you will need to require it.
-
-For example,
-
-	var my_module = require('com.polancomedia.tiavaudiosession');
-	my_module.foo();
-
-
-TESTING YOUR MODULE
--------------------
-
-To test with the script, execute:
-
-	titanium run --dir=YOURMODULEDIR
+	ti build -p ios -d iphone
 
 This will execute the app.js in the example folder as a Titanium application.
 
+#### Building Only
 
-DISTRIBUTING YOUR MODULE
--------------------------
-
-You can choose to manually distribute your module distribution zip file or through the Titanium Marketplace!
-
-
-Cheers!
+	./iphone/build.py
