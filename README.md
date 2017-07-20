@@ -47,3 +47,15 @@ This will execute the app.js in the example folder as a Titanium application.
 #### Building Only
 
 	./iphone/build.py
+
+
+## Acknowledgements
+Thanks to Michael Z. for contributing this module to open source.
+## About
+* Me: [Adam Paxton](http://adampaxton.com)
+* Twitter: [@adampax](http://twitter.com/adampax)
+* Work: [Polanco Media, LLC](http://polancomedia.com)
+
+## License
+MIT License
+Copyright (c) 2017 Polanco Media, LLC
