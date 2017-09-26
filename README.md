@@ -4,6 +4,8 @@
 
 This module is for using [AVAudioSessionCategoryOptionDuckOthers](https://developer.apple.com/documentation/avfoundation/avaudiosessioncategoryoptions/avaudiosessioncategoryoptionduckothers) which causes audio running from other apps (Music, Spotify, etc) to be temporarily ducked (reduced in volume) when this app plays a sound.
 
+[Related Blog Post](http://adampaxton.com/turn-down-background-audio-in-your-appcelerator-ios-app/)
+
 ### Methods
 * `init()`: Intializes the audio session for the app using `AVAudioSessionCategoryAmbient`.  This needs to be run when the app is first opened.
 * `enableDuckAudio()`: Call this right before you play a sound. Note that you only need to call it once during an app session to have all sounds duck the audio, though calling it more than once, such as before every sound you play, is fine.
